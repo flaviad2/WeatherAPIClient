@@ -50,15 +50,7 @@ namespace WebApplication2.Controllers
 
 
 		}
-		/*
-		[HttpGet(Name = "GetWeatherForecast")]
-		public IEnumerable<WeatherForecast> Get()
-		{
-
-			return all;
-
-
-		}*/
+		
 
 
 		[HttpPost(Name = "SaveWeatherForecast")]
