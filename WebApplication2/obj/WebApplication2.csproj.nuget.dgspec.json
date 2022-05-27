@@ -44,6 +44,10 @@
               "target": "Package",
               "version": "[1.0.7, )"
             },
+            "IKVM": {
+              "target": "Package",
+              "version": "[8.1.5717, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[6.0.5, )"

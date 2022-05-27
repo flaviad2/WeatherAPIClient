@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "b3lHzWJUe9JROOX95M1Fw/P+nTT7vw5mQs1M9xIOS7sB1dlENnM+9OZN1pInkpSd2rThVLZJKuc6kFRmVeFU8g==",
+  "dgSpecHash": "5+K+qxJ+YvoiqPeQQRbf1L5pC70OE8ri1eyO4Y2Kr88ujfAoklQHyPHj0ycHDc5J47wPJV6SAx7HxYMDw82RCw==",
   "success": true,
   "projectFilePath": "C:\\Users\\ANTONIA.DOROBAT\\source\\repos\\WebApplication2\\WebApplication2\\WebApplication2.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ANTONIA.DOROBAT\\.nuget\\packages\\enum.ext\\1.0.7\\enum.ext.1.0.7.nupkg.sha512",
     "C:\\Users\\ANTONIA.DOROBAT\\.nuget\\packages\\enum.ext.newtonsoftjson\\1.0.7\\enum.ext.newtonsoftjson.1.0.7.nupkg.sha512",
+    "C:\\Users\\ANTONIA.DOROBAT\\.nuget\\packages\\ikvm\\8.1.5717\\ikvm.8.1.5717.nupkg.sha512",
     "C:\\Users\\ANTONIA.DOROBAT\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\ANTONIA.DOROBAT\\.nuget\\packages\\microsoft.data.sqlclient\\2.1.4\\microsoft.data.sqlclient.2.1.4.nupkg.sha512",
     "C:\\Users\\ANTONIA.DOROBAT\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\2.1.1\\microsoft.data.sqlclient.sni.runtime.2.1.1.nupkg.sha512",
@@ -92,5 +93,16 @@
     "C:\\Users\\ANTONIA.DOROBAT\\.nuget\\packages\\z.entityframework.plus.efcore\\6.13.21\\z.entityframework.plus.efcore.6.13.21.nupkg.sha512",
     "C:\\Users\\ANTONIA.DOROBAT\\.nuget\\packages\\z.expressions.eval\\4.0.82\\z.expressions.eval.4.0.82.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'IKVM 8.1.5717' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net6.0'. This package may not be fully compatible with your project.",
+      "libraryId": "IKVM",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    }
+  ]
 }

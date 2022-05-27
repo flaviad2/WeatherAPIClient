@@ -4,42 +4,46 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Newtonsoft.Json.Converters;
 using WebApplication2.Models;
-using WebApplication2.WeatherData;
+using WebApplication2.WeatherRepository;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json;
 
 using System.Runtime.Serialization;
+using java.time.temporal;
 
 namespace WebApplication2.Controllers
 {
-   // [Route("api/[controller]")]
     [Route("")]
-    [ApiController]
    
+    [ApiController]
+
     public class WeatherController : ControllerBase
     {
-        private IWeatherData _weatherData; 
-        public WeatherController(IWeatherData weather)
+        private IWeatherRepository _weatherData;
+
+       
+         
+        public WeatherController(IWeatherRepository weather)
         {
-            _weatherData = weather; 
+            _weatherData = weather;
+            
 
         }
-
 
         //get all 
         [HttpGet]
         [Route("api/[controller]")]
-        
+
         public IActionResult GetWeathers()
         {
             if (_weatherData.getWeathers().Count != 0)
-                return Ok(_weatherData.getWeathers());
-            else 
+                return Ok(Converter.weatherToResponseList(_weatherData.getWeathers()));
+            else
                 return NoContent();
 
         }
 
-       
+
 
         //get one dupa id
         [HttpGet]
@@ -49,35 +53,42 @@ namespace WebApplication2.Controllers
             var weather = _weatherData.GetWeather(id);
             if (weather != null)
             {
-                return Ok(_weatherData.GetWeather(id));
+                return Ok(Converter.weatherToResponseElem(_weatherData.GetWeather(id)));
             }
-            return NotFound($"The weather with id : {id} was not found"); 
-         }
+            return NotFound($"The weather with id : {id} was not found");
+        }
+
+
+
 
 
         //add
         [HttpPost]
         [Route("api/[controller]")]
-        public IActionResult PostWeather(Weather weather)
+        public IActionResult PostWeather(WeatherRequest weather)
         {
-            _weatherData.AddWeather(weather);
-            return Created(HttpContext.Request.Scheme + "://" + HttpContext.Request.Host + HttpContext.Request.Path + "/" + weather.Id, weather); 
+            _weatherData.AddWeather(Converter.requestToWeather(weather));
+            return Created(HttpContext.Request.Scheme + "://" + HttpContext.Request.Host + HttpContext.Request.Path + "/" + weather.Id, weather);
 
         }
+
+
 
         //update
         [HttpPut]
         [Route("api/[controller]/{id}")]
-        public IActionResult EditWeather( int id, Weather weather)
+        public IActionResult EditWeather(int id, WeatherRequest weatherRequest)
         {
-          
 
-            if(_weatherData.EditWeather(id,weather)!=null)
-                 return Ok(weather);
+            WeatherEntity weather = Converter.requestToWeather(weatherRequest);
+            if (_weatherData.EditWeather(id, weather) != null)
+                return Ok(Converter.weatherToResponseElem(weather));
             else
                 return NotFound($"The weather with id : {id} was not found");
 
         }
+
+
 
 
         //delete
@@ -85,14 +96,16 @@ namespace WebApplication2.Controllers
         [Route("api/[controller]/{id}")]
         public IActionResult DeleteWeather(int id)
         {
-            var weather = _weatherData.GetWeather(id); 
-            if(weather != null)
+            var weather = _weatherData.GetWeather(id);
+            if (weather != null)
             {
                 _weatherData.DeleteWeather(weather.Id);
                 return Ok();
             }
-            return NotFound($"Weather with Id: {id} was not found"); 
+            return NotFound($"Weather with Id: {id} was not found");
         }
+
+
 
 
 
@@ -105,16 +118,19 @@ namespace WebApplication2.Controllers
         public IActionResult GetWeathersBetweenDates(DateTime date1, DateTime date2)
         {
             if (date1 > date2)
-                return BadRequest(); 
-            List<Weather> weatherResult = _weatherData.GetWeathersBetweenDates(date1, date2); 
-            if(weatherResult.Count!=0)
-            {   
-                return Ok(weatherResult); 
+                return BadRequest();
+            List<WeatherEntity> weatherResult = _weatherData.GetWeathersBetweenDates(date1, date2);
+            if (weatherResult.Count != 0)
+            {
+                return Ok(Converter.weatherToResponseList(weatherResult));
             }
             return NotFound($"No weather forecasts between dates {date1} and {date2} were found.");
-            
+
 
         }
+
+
+
 
 
         //apel cu : 2008-11-11T00:00:00 
@@ -124,35 +140,49 @@ namespace WebApplication2.Controllers
 
         public IActionResult GetWeathersFromDate(DateTime date_day)
         {
-            List<Weather> weathers = _weatherData.GetWeathersFromDay(date_day); 
-            if(weathers.Count!=0)
+            List<WeatherEntity> weathers = _weatherData.GetWeathersFromDay(date_day);
+            if (weathers.Count != 0)
             {
-                return Ok(weathers);
+                return Ok(Converter.weatherToResponseList(weathers));
             }
             return NoContent();
 
         }
 
+
+
         //apel cu : 2008-11-11T00:00:00 
-        //sterge toate prognozele care sunt indepartate cu mai mult de 30 de zile de ziua data ca param
+        //sterge toate prognozele din acea data daca data e valida
         [HttpDelete]
-        [Route("api/[controller]/delete_range_30_days/{today}")]
-        public IActionResult DeleteWeatherTooFar(DateTime today)
+        [Route("api/[controller]/30days/{day}")]
+        public IActionResult DeleteWeather30days(DateTime day)
         {
-            List<Weather> forDeletion = _weatherData.GetWeathersNotTooFar(today);
-            if (forDeletion.Count > 0)
+            bool hasBeenDeleted = false;
+            DateTime today = DateTime.Now;
+            if( (today-day).TotalDays <= 30) //atunci se poate sterge
             {
-                for (int i = 0; i < forDeletion.Count; i++)
+                //daca da, stergem toate prognozele din acea data
+
+                List<WeatherEntity> forDeletion = _weatherData.GetWeathersFromDay(day); 
+                for(int i=0; i<forDeletion.Count; i++)
                 {
                     _weatherData.DeleteWeather(forDeletion[i].Id);
-
+                    hasBeenDeleted = true; 
                 }
-                return Ok();
+                if(hasBeenDeleted == true)
+                    return Ok();
+                else 
+                    return NotFound($"No weather forecast has been deleted because there aren't weather forecasts from this date. ");
+
 
             }
-            return NotFound($"No weather forecast has been deleted. ");
+           return BadRequest($"Wrong calendar date! ");
+
 
         }
+       
+
+
 
         //update
         //editeaza prognoza pentru ziua data si sursa data
@@ -160,18 +190,20 @@ namespace WebApplication2.Controllers
         //data ca parametru si nu trebuie pusa neaparat in obiect 
 
         [HttpPut]
-        [Route("api/[controller]/update_weather_for_day_and_source/{date}")]
-        public IActionResult EditWeather(DateTime date, Source source, Weather weather)
+        [Route("api/[controller]/for_day/{date}")]
+        public IActionResult EditWeather(DateTime date, SourceEnum source, WeatherRequest weatherRequest)
         {
-          
-            weather.DataSource= source;
+            WeatherEntity weather = Converter.requestToWeather(weatherRequest); 
+            weather.DataSource = source;
             weather.Date = date;
-            if (_weatherData.EditWeatherFromDayFromSource(date, source, weather) != null)
-                return Ok(weather);
+            if (_weatherData.EditWeatherFromDayFromSource(date, source,weather) != null)
+                return Ok(Converter.weatherToResponseElem(weather));
             else return NotFound($"Weather for day {date} and source {source} was not found");
-          
+
 
         }
+
+
 
         //add
         //adauga o prognoza meteo noua cu datele date in header, dar data se da separat, fiind prognoza pentru ziua respectiva
@@ -190,18 +222,19 @@ namespace WebApplication2.Controllers
 
 
    */
+
         [HttpPost]
         [Route("api/[controller]/{date}")]
 
-        public IActionResult PostWeatherWithDate(DateTime date, Weather weather)
+        public IActionResult PostWeatherWithDate(DateTime date, WeatherEntity weather)
         {
             try
             {
-                weather.Date = date; 
+                weather.Date = date;
                 _weatherData.AddWeatherWithDate(date, weather);
                 return Created(HttpContext.Request.Scheme + "://" + HttpContext.Request.Host + HttpContext.Request.Path + "/" + weather.Id, weather);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return BadRequest($"No weather forecast has been added because the date is invalid. Please enter a valid date for the forecast! ");
             }
