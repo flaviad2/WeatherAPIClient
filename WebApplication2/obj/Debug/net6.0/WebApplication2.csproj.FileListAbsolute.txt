@@ -91,3 +91,5 @@ C:\Users\ANTONIA.DOROBAT\source\repos\WebApplication2\WebApplication2\bin\Debug\
 C:\Users\ANTONIA.DOROBAT\source\repos\WebApplication2\WebApplication2\bin\Debug\net6.0\IKVM.OpenJDK.XML.XPath.dll
 C:\Users\ANTONIA.DOROBAT\source\repos\WebApplication2\WebApplication2\bin\Debug\net6.0\IKVM.Runtime.JNI.dll
 C:\Users\ANTONIA.DOROBAT\source\repos\WebApplication2\WebApplication2\bin\Debug\net6.0\IKVM.Runtime.dll
+C:\Users\ANTONIA.DOROBAT\source\repos\WebApplication2\WebApplication2\bin\Debug\net6.0\System.Net.Http.Formatting.dll
+C:\Users\ANTONIA.DOROBAT\source\repos\WebApplication2\WebApplication2\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll

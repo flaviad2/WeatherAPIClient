@@ -14,8 +14,8 @@ using java.time.temporal;
 namespace WebApplication2.Controllers
 {
     [Route("")]
-   
     [ApiController]
+    
 
     public class WeatherController : ControllerBase
     {
@@ -34,7 +34,7 @@ namespace WebApplication2.Controllers
         [HttpGet]
         [Route("api/[controller]")]
 
-        public IActionResult GetWeathers()
+        public  IActionResult GetWeathers()
         {
             if (_weatherData.getWeathers().Count != 0)
                 return Ok(Converter.weatherToResponseList(_weatherData.getWeathers()));

@@ -24,14 +24,7 @@ namespace WebApplication2.WeatherRepository
             _weatherContext.WeatherForecasts.Remove(_weatherContext.WeatherForecasts.Find(Id));
             _weatherContext.SaveChanges();
         }
-        /*
-        public Weather EditWeather(Weather weather)
-        {
-                _weatherContext.WeatherForecasts.Update(weather);
-                _weatherContext.SaveChanges();
-           
-          return weather;
-        } */
+        
 
         public WeatherEntity EditWeather(int Id, WeatherEntity weather)
         {

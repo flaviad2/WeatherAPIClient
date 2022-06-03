@@ -1,7 +1,7 @@
 using WebApplication2.Models;
 using Microsoft.EntityFrameworkCore;
 using WebApplication2.WeatherRepository;
-
+using WebApplication2.Controllers;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -16,7 +16,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCors();
 builder.Services.AddDbContextPool<WeatherContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("WeatherContextConnectionString")));
 
-builder.Services.AddScoped<IWeatherRepository, SqlWeatherData>(); 
+IServiceCollection serviceCollection = builder.Services.AddScoped<IWeatherRepository, SqlWeatherData>();
+
 
 var app = builder.Build();
 

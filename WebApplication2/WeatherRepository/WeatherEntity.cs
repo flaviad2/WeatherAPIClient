@@ -8,10 +8,7 @@ using WebApplication2.Models;
 
 namespace WebApplication2.WeatherRepository
 {
-    // serializer.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
-    //[JsonConverter(typeof(StringEnumConverter))]
-
-
+  
     
 
     public class WeatherEntity
