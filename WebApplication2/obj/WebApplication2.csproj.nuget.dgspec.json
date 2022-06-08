@@ -44,10 +44,6 @@
               "target": "Package",
               "version": "[1.0.7, )"
             },
-            "IKVM": {
-              "target": "Package",
-              "version": "[8.1.5717, )"
-            },
             "Microsoft.AspNet.WebApi.Client": {
               "target": "Package",
               "version": "[5.2.8, )"

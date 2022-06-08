@@ -1,15 +1,9 @@
-﻿using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Http;
+﻿
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
-using Newtonsoft.Json.Converters;
+
 using WebApplication2.Models;
 using WebApplication2.WeatherRepository;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json;
 
-using System.Runtime.Serialization;
-using java.time.temporal;
 
 namespace WebApplication2.Controllers
 {
@@ -37,7 +31,7 @@ namespace WebApplication2.Controllers
         public  IActionResult GetWeathers()
         {
             if (_weatherData.getWeathers().Count != 0)
-                return Ok(Converter.weatherToResponseList(_weatherData.getWeathers()));
+                return Ok(Converter.WeatherToResponseList(_weatherData.getWeathers()));
             else
                 return NoContent();
 
@@ -122,7 +116,7 @@ namespace WebApplication2.Controllers
             List<WeatherEntity> weatherResult = _weatherData.GetWeathersBetweenDates(date1, date2);
             if (weatherResult.Count != 0)
             {
-                return Ok(Converter.weatherToResponseList(weatherResult));
+                return Ok(Converter.WeatherToResponseList(weatherResult));
             }
             return NotFound($"No weather forecasts between dates {date1} and {date2} were found.");
 
@@ -143,7 +137,7 @@ namespace WebApplication2.Controllers
             List<WeatherEntity> weathers = _weatherData.GetWeathersFromDay(date_day);
             if (weathers.Count != 0)
             {
-                return Ok(Converter.weatherToResponseList(weathers));
+                return Ok(Converter.WeatherToResponseList(weathers));
             }
             return NoContent();
 
@@ -159,7 +153,9 @@ namespace WebApplication2.Controllers
         {
             bool hasBeenDeleted = false;
             DateTime today = DateTime.Now;
-            if( (today-day).TotalDays <= 30) //atunci se poate sterge
+
+            var x = today - day; 
+            if (Math.Abs((today-day).TotalDays) >=30) //atunci se poate sterge
             {
                 //daca da, stergem toate prognozele din acea data
 
@@ -190,7 +186,7 @@ namespace WebApplication2.Controllers
         //data ca parametru si nu trebuie pusa neaparat in obiect 
 
         [HttpPut]
-        [Route("api/[controller]/for_day/{date}")]
+        [Route("api/[controller]/for_day/{date}/{source}")]
         public IActionResult EditWeather(DateTime date, SourceEnum source, WeatherRequest weatherRequest)
         {
             WeatherEntity weather = Converter.requestToWeather(weatherRequest); 
@@ -231,10 +227,10 @@ namespace WebApplication2.Controllers
             try
             {
                 weather.Date = date;
-                _weatherData.AddWeatherWithDate(date, weather);
+                _weatherData.AddWeatherWithDate(weather.Date, weather);
                 return Created(HttpContext.Request.Scheme + "://" + HttpContext.Request.Host + HttpContext.Request.Path + "/" + weather.Id, weather);
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 return BadRequest($"No weather forecast has been added because the date is invalid. Please enter a valid date for the forecast! ");
             }

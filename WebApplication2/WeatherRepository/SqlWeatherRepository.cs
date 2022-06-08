@@ -5,7 +5,7 @@ namespace WebApplication2.WeatherRepository
 {
     public class SqlWeatherData : IWeatherRepository
     {
-        private WeatherContext _weatherContext; 
+        private readonly WeatherContext _weatherContext; 
         public SqlWeatherData(WeatherContext context)
         {
             _weatherContext = context;
@@ -21,14 +21,17 @@ namespace WebApplication2.WeatherRepository
         public void DeleteWeather(int Id)
         {
             //verifica metoda din Controller daca prognoza exista si aici fac doar stergere dupa id, stiind ca exista
-            _weatherContext.WeatherForecasts.Remove(_weatherContext.WeatherForecasts.Find(Id));
-            _weatherContext.SaveChanges();
+            if (_weatherContext.WeatherForecasts.Find(Id) != null)
+            {
+                _weatherContext.WeatherForecasts.Remove(_weatherContext?.WeatherForecasts?.Find(Id));
+                _weatherContext.SaveChanges();
+            }
         }
         
 
         public WeatherEntity EditWeather(int Id, WeatherEntity weather)
         {
-            WeatherEntity oldWeather = _weatherContext.WeatherForecasts.Where(w=>w.Id==weather.Id).FirstOrDefault();
+            WeatherEntity oldWeather = _weatherContext?.WeatherForecasts.Where(w=>w.Id==weather.Id).FirstOrDefault();
             if (oldWeather != null)
             {
                 oldWeather.Date = weather.Date;
@@ -99,13 +102,15 @@ namespace WebApplication2.WeatherRepository
             WeatherEntity oldWeather = _weatherContext.WeatherForecasts.Where(w => w.Date == date && w.DataSource == source).FirstOrDefault(); 
           if(oldWeather != null)
             {
+                oldWeather.Id = weather.Id; 
                 oldWeather.Date = weather.Date;
                 oldWeather.Time = weather.Time;
                 oldWeather.MinimumTemperature = weather.MinimumTemperature;
                 oldWeather.MaximumTemperature = weather.MaximumTemperature;
                 oldWeather.AtmosphericFenomens = weather.AtmosphericFenomens;
                 oldWeather.PrecipitationsProbability = weather.PrecipitationsProbability;
-                oldWeather.DataSource = weather.DataSource; 
+                oldWeather.DataSource = weather.DataSource;
+                oldWeather.OtherInformation = weather.OtherInformation;
                 _weatherContext.WeatherForecasts.Update(oldWeather);
                 _weatherContext.SaveChanges();
                 return oldWeather;

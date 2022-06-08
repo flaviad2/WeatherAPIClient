@@ -8,7 +8,7 @@ namespace WebApplication2.Controllers
 
         private Converter() { }
 
-        public static Converter instance=null;
+        public static Converter? instance =null;
 
         public static Converter Instance
         {
@@ -21,9 +21,9 @@ namespace WebApplication2.Controllers
                 return instance;
             }
         }
-        public static List<WeatherResponse> weatherToResponseList(List<WeatherEntity> weathers)
+        public static List<WeatherResponse> WeatherToResponseList(List<WeatherEntity> weathers)
         {
-            List<WeatherResponse> listResult = new List<WeatherResponse>();
+            List<WeatherResponse> listResult = new();
             foreach (WeatherEntity w in weathers)
             {
                 WeatherResponse weatherResponse = new WeatherResponse(w.Id, w.Date, w.Time, w.MinimumTemperature, w.MaximumTemperature, w.PrecipitationsProbability, w.AtmosphericFenomens, w.OtherInformation, w.DataSource);

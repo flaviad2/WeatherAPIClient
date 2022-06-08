@@ -1,12 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "fkLvDGstdaJMDg6+vtwzIPPclkCVIBzK41LUtR4Df5T9btqU0bL/vDBGYqxo6krXKEcbMRO76edGlf36CkLOIw==",
+  "dgSpecHash": "ybsMpnt94jmAutRXCIHUYt9flAYjz0IwHEmyydVY6EvZS1fuH5uj1Kgu8w9KuHDmSxY3h02C+Sf7srdHzP6XDw==",
   "success": true,
   "projectFilePath": "C:\\Users\\ANTONIA.DOROBAT\\source\\repos\\WebApplication2\\WebApplication2\\WebApplication2.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ANTONIA.DOROBAT\\.nuget\\packages\\enum.ext\\1.0.7\\enum.ext.1.0.7.nupkg.sha512",
     "C:\\Users\\ANTONIA.DOROBAT\\.nuget\\packages\\enum.ext.newtonsoftjson\\1.0.7\\enum.ext.newtonsoftjson.1.0.7.nupkg.sha512",
-    "C:\\Users\\ANTONIA.DOROBAT\\.nuget\\packages\\ikvm\\8.1.5717\\ikvm.8.1.5717.nupkg.sha512",
     "C:\\Users\\ANTONIA.DOROBAT\\.nuget\\packages\\microsoft.aspnet.webapi.client\\5.2.8\\microsoft.aspnet.webapi.client.5.2.8.nupkg.sha512",
     "C:\\Users\\ANTONIA.DOROBAT\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.2.0\\microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\ANTONIA.DOROBAT\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.2.0\\microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",
@@ -140,16 +139,5 @@
     "C:\\Users\\ANTONIA.DOROBAT\\.nuget\\packages\\z.entityframework.plus.efcore\\6.13.21\\z.entityframework.plus.efcore.6.13.21.nupkg.sha512",
     "C:\\Users\\ANTONIA.DOROBAT\\.nuget\\packages\\z.expressions.eval\\4.0.82\\z.expressions.eval.4.0.82.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'IKVM 8.1.5717' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net6.0'. This package may not be fully compatible with your project.",
-      "libraryId": "IKVM",
-      "targetGraphs": [
-        "net6.0"
-      ]
-    }
-  ]
+  "logs": []
 }

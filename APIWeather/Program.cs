@@ -1,9 +1,7 @@
-using WebApplication2.Models;
 using Microsoft.EntityFrameworkCore;
-using WebApplication2.WeatherRepository;
-using WebApplication2.Controllers;
+
 using APIWeather.Controllers;
-using WebApplication2;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,7 +23,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCors();
 
 
-builder.Services.AddScoped<WeatherAPIController>();
+//builder.Services.AddScoped<WeatherAPIController>();
+//builder.Services.Add(new WeatherAPIController(new WebApplication2.Controllers.WeatherController(new )))
 
 var app = builder.Build();
 
