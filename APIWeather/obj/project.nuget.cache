@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "tclxdF3jDjs8l3lQ5R8tmTmzn5HZxVQM+kUO9bnrKS2yfWCZNXoZDXUvlX2vDM/cajDkIfIhR+NeVBUTAIh64w==",
+  "dgSpecHash": "Z9o3oeAIotdQVNxBNbYGLZWy7TvgVwE0rpq5B3uUJzz+4VFZwM0J6TljN+IdSrG9y8HyilTn6ba/uqzLF/CZ6Q==",
   "success": true,
   "projectFilePath": "C:\\Users\\ANTONIA.DOROBAT\\source\\repos\\WebApplication2\\APIWeather\\APIWeather.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ANTONIA.DOROBAT\\.nuget\\packages\\enum.ext\\1.0.7\\enum.ext.1.0.7.nupkg.sha512",
     "C:\\Users\\ANTONIA.DOROBAT\\.nuget\\packages\\enum.ext.newtonsoftjson\\1.0.7\\enum.ext.newtonsoftjson.1.0.7.nupkg.sha512",
+    "C:\\Users\\ANTONIA.DOROBAT\\.nuget\\packages\\json.net\\1.0.33\\json.net.1.0.33.nupkg.sha512",
     "C:\\Users\\ANTONIA.DOROBAT\\.nuget\\packages\\microsoft.aspnet.webapi.client\\5.2.8\\microsoft.aspnet.webapi.client.5.2.8.nupkg.sha512",
     "C:\\Users\\ANTONIA.DOROBAT\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.2.0\\microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\ANTONIA.DOROBAT\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.2.0\\microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",

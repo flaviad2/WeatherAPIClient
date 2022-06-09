@@ -43,7 +43,7 @@ namespace APIWeather.Models
         {
             Id = id;
             Date = date;
-            Time = time;
+            TimeOfTheDate = time;
             MinimumTemperature = minimumTemperature;
             MaximumTemperature = maximumTemperature;
             PrecipitationsProbability = precipitationsProbability;

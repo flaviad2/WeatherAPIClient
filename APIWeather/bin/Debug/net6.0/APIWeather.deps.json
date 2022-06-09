@@ -9,13 +9,13 @@
       "APIWeather/1.0.0": {
         "dependencies": {
           "Enum.Ext.NewtonsoftJson": "1.0.7",
+          "Json.Net": "1.0.33",
           "Microsoft.AspNet.WebApi.Client": "5.2.8",
           "Microsoft.AspNetCore.Mvc.Abstractions": "2.2.0",
           "Microsoft.EntityFrameworkCore": "6.0.5",
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.5",
           "Newtonsoft.Json": "13.0.1",
           "Swashbuckle.AspNetCore": "6.2.3",
-          "WebApplication2": "1.0.0",
           "Z.EntityFramework.Plus.EFCore": "6.13.21"
         },
         "runtime": {
@@ -39,6 +39,14 @@
           "lib/netstandard2.0/Enum.Ext.NewtonsoftJson.dll": {
             "assemblyVersion": "1.0.7.0",
             "fileVersion": "1.0.7.0"
+          }
+        }
+      },
+      "Json.Net/1.0.33": {
+        "runtime": {
+          "lib/netstandard2.0/Json.Net.dll": {
+            "assemblyVersion": "1.0.33.1",
+            "fileVersion": "1.0.33.1"
           }
         }
       },
@@ -1252,21 +1260,6 @@
             "fileVersion": "4.0.82.0"
           }
         }
-      },
-      "WebApplication2/1.0.0": {
-        "dependencies": {
-          "Enum.Ext.NewtonsoftJson": "1.0.7",
-          "Microsoft.AspNet.WebApi.Client": "5.2.8",
-          "Microsoft.AspNetCore.Mvc.Abstractions": "2.2.0",
-          "Microsoft.EntityFrameworkCore": "6.0.5",
-          "Microsoft.EntityFrameworkCore.SqlServer": "6.0.5",
-          "Newtonsoft.Json": "13.0.1",
-          "Swashbuckle.AspNetCore": "6.2.3",
-          "Z.EntityFramework.Plus.EFCore": "6.13.21"
-        },
-        "runtime": {
-          "WebApplication2.dll": {}
-        }
       }
     }
   },
@@ -1289,6 +1282,13 @@
       "sha512": "sha512-yIPKDr3/HR7ebKEuMqvxSRUBRcZ1UmG7b8cbWEr1569S+3JyPy4FvGzJPXSw0m0CO3cpuzyQpJj1tE00ClizRw==",
       "path": "enum.ext.newtonsoftjson/1.0.7",
       "hashPath": "enum.ext.newtonsoftjson.1.0.7.nupkg.sha512"
+    },
+    "Json.Net/1.0.33": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-5tE+db6BqhRAvITIVBeRsQorLGshPExfm4FmMRvWWAfs4RxeTbFFj2PIEybwmMW0qR30HKkXDYhq0YkDK2Jtxw==",
+      "path": "json.net/1.0.33",
+      "hashPath": "json.net.1.0.33.nupkg.sha512"
     },
     "Microsoft.AspNet.WebApi.Client/5.2.8": {
       "type": "package",
@@ -2213,11 +2213,6 @@
       "sha512": "sha512-2axiY94uRqCF8Vn95JYNHxdqfF9VCXP8kmy7KY1Ie1R+phDIiUIL30ycsEvTAzqroEyZJsiKMxnH0pzBbdjD4A==",
       "path": "z.expressions.eval/4.0.82",
       "hashPath": "z.expressions.eval.4.0.82.nupkg.sha512"
-    },
-    "WebApplication2/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
     }
   }
 }

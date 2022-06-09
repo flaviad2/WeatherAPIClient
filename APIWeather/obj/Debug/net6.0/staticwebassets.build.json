@@ -1,23 +1,11 @@
 {
   "Version": 1,
-  "Hash": "ZX/FwvcMDavMMocPQNtywoAeg+VgB/cakNf4jM5AdVw=",
+  "Hash": "n2kaA9+ZR9q7PbyvRlxcdxRZtJuwSrJYfitHuSNLy5k=",
   "Source": "APIWeather",
   "BasePath": "_content/APIWeather",
   "Mode": "Default",
   "ManifestType": "Build",
-  "ReferencedProjectsConfiguration": [
-    {
-      "Identity": "C:\\Users\\ANTONIA.DOROBAT\\source\\repos\\WebApplication2\\WebApplication2\\WebApplication2.csproj",
-      "Version": 2,
-      "Source": "WebApplication2",
-      "GetPublishAssetsTargets": "ComputeReferencedStaticWebAssetsPublishManifest;GetCurrentProjectPublishStaticWebAssetItems",
-      "AdditionalPublishProperties": "Configuration=Debug;Platform=AnyCPU",
-      "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier",
-      "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
-      "AdditionalBuildProperties": "Configuration=Debug;Platform=AnyCPU",
-      "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier"
-    }
-  ],
+  "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
   "Assets": []
 }
