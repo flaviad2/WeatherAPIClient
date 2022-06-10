@@ -8,7 +8,7 @@ namespace APIWeather.Models
 
     public class WeatherEntity
     {
-        [Key]
+        
         [JsonProperty("Id")]
         public int Id { get; set; }
 

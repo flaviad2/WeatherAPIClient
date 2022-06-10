@@ -7,6 +7,7 @@ C:\Users\ANTONIA.DOROBAT\source\repos\WebApplication2\APIWeather\bin\Debug\net6.
 C:\Users\ANTONIA.DOROBAT\source\repos\WebApplication2\APIWeather\bin\Debug\net6.0\APIWeather.pdb
 C:\Users\ANTONIA.DOROBAT\source\repos\WebApplication2\APIWeather\bin\Debug\net6.0\Enum.Ext.dll
 C:\Users\ANTONIA.DOROBAT\source\repos\WebApplication2\APIWeather\bin\Debug\net6.0\Enum.Ext.NewtonsoftJson.dll
+C:\Users\ANTONIA.DOROBAT\source\repos\WebApplication2\APIWeather\bin\Debug\net6.0\Json.Net.dll
 C:\Users\ANTONIA.DOROBAT\source\repos\WebApplication2\APIWeather\bin\Debug\net6.0\System.Net.Http.Formatting.dll
 C:\Users\ANTONIA.DOROBAT\source\repos\WebApplication2\APIWeather\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
 C:\Users\ANTONIA.DOROBAT\source\repos\WebApplication2\APIWeather\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
@@ -65,4 +66,3 @@ C:\Users\ANTONIA.DOROBAT\source\repos\WebApplication2\APIWeather\obj\Debug\net6.
 C:\Users\ANTONIA.DOROBAT\source\repos\WebApplication2\APIWeather\obj\Debug\net6.0\APIWeather.pdb
 C:\Users\ANTONIA.DOROBAT\source\repos\WebApplication2\APIWeather\obj\Debug\net6.0\APIWeather.genruntimeconfig.cache
 C:\Users\ANTONIA.DOROBAT\source\repos\WebApplication2\APIWeather\obj\Debug\net6.0\ref\APIWeather.dll
-C:\Users\ANTONIA.DOROBAT\source\repos\WebApplication2\APIWeather\bin\Debug\net6.0\Json.Net.dll

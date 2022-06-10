@@ -17,7 +17,9 @@
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },
             "applicationUrl": "https://localhost:7276;http://localhost:5276",
-            "dotnetRunMessages": true
+            "dotnetRunMessages": true,
+            "weathersUrl": "https://localhost:44391/api/Weather/"
+
         },
         "IIS Express": {
             "commandName": "IISExpress",

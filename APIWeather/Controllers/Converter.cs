@@ -42,6 +42,25 @@ namespace APIWeather.Controllers
 
         }
 
+        public static WeatherEntity ToWeatherEntity(WeatherResponseW2 we)
+        {
+            return new WeatherEntity(we.Id, we.Date, we.Time, we.MinimumTemperature, we.MaximumTemperature, we.PrecipitationsProbability,
+                                        we.AtmosphericFenomens, we.OtherInformation, we.DataSource);
+
+        }
+
+        public static List<WeatherEntity> ListW2ToListEntity(List<WeatherResponseW2> wList)
+        {
+            List<WeatherEntity> result = new List<WeatherEntity>();
+            foreach(WeatherResponseW2 we in wList)
+            {
+                result.Add(new WeatherEntity(we.Id, we.Date, we.Time, we.MinimumTemperature, we.MaximumTemperature, we.PrecipitationsProbability,
+                                        we.AtmosphericFenomens, we.OtherInformation, we.DataSource));
+
+            }
+            return result;
+        }
+
 
     }
 }

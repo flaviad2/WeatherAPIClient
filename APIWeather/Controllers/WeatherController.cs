@@ -5,24 +5,29 @@ using Newtonsoft.Json.Linq;
 using APIWeather.Models;
 using Newtonsoft.Json.Schema;
 using System.Text.Json;
-
+using static Microsoft.Extensions.Configuration.IConfiguration; 
 namespace APIWeather.Controllers
 {
-    
+
     [ApiController]
     [Route("secondAPI/[controller]")]
     public class WeatherAPIController : ControllerBase
     {
 
-      
 
-      
-        public WeatherAPIController()
+
+
+        private readonly IConfiguration _config;
+
+        private String weatherUrl;
+        public WeatherAPIController(IConfiguration config)
         {
-            
+            _config = config;
+            weatherUrl = _config.GetValue<String>("WeatherUrl");
         }
 
-    
+
+
 
 
 
@@ -32,141 +37,72 @@ namespace APIWeather.Controllers
         [HttpGet("GetAll")]
         public async Task<ActionResult<List<WeatherResponse>>> GetAll()
         {
-        var httpclient = new HttpClient();
-        var response = await httpclient.GetAsync("https://localhost:44391/api/Weather");
 
+            var httpclient = new HttpClient();
+            var response = await httpclient.GetAsync(weatherUrl);
+            var responseW2 = await response.Content.ReadAsAsync<List<WeatherResponseW2>>();
+            httpclient.Dispose();
 
-        var responseW2 = await response.Content.ReadAsStringAsync();
-        var responseString = responseW2.ToString();
-        //weatherResponseW2 in format Json
-
-        httpclient.Dispose();
 
             if (response.IsSuccessStatusCode)
             {
 
-                //json pt W2 ??
-                var jsonFirstApi = JToken.Parse(responseString).ToString(); 
+
+                List<WeatherEntity> listOfWeathers = Converter.ListW2ToListEntity(responseW2);
 
 
-                //obiect deserializat 
-                //string --> weatherEntity
-                List<WeatherEntity>? weathers= System.Text.Json.JsonSerializer.Deserialize <List<WeatherEntity>>(jsonFirstApi);  
+                List<WeatherResponse>? weathersResponse = Converter.WeatherToResponseList(listOfWeathers);
 
-
-
-                //mapare de obiecte deserializate la modele de raspuns din serviciu care e rasp pt client
-                //weatherEntity --> weatherResponse
-                List<WeatherResponse>? weathersResponse = Converter.WeatherToResponseList(weathers);
-
-
-             
-                //weatherResponse --> json
-                String jsonString = ""; 
-                foreach (WeatherResponse q in weathersResponse)
-                {
-                    var json_string = JsonConvert.SerializeObject(new
-                    {
-                        id = q.Id,
-                        date = q.Date,
-                        time = q.TimeOfTheDate,
-                        minimumTemperature = q.MinimumTemperature,
-                        maximumTemperature = q.MaximumTemperature,
-                        precipitationsProbality = q.PrecipitationsProbability,
-                        atmosphericFenomens = q.AtmosphericFenomens,
-                        otherInformation = q.OtherInformation,
-                        dataSource = q.DataSource
-                    });
-                    
-                    var httpContent = new StringContent(json_string, Encoding.UTF8, "application/json");
-                    jsonString = jsonString + httpContent.ReadAsStringAsync().Result.ToString().Replace(",", ",\n").Replace("}", "}\n");
-
-
-                }
-                var json = JToken.Parse(jsonString).ToString();
-                return Ok(json);
+                return Ok(weathersResponse);
                 //return obiect de raspuns nou
 
 
-
-
             }
-            else return NoContent();
+            else
+            {
+
+                return NoContent();
+            }
         }
 
 
 
 
 
-/*
- * Ia toate prognozele dintre doua date 
- */
+        /*
+         * Ia toate prognozele dintre doua date 
+         */
         [HttpGet("GetTwoDates")]
         public async Task<ActionResult<List<WeatherResponse>>> GetTwoDates(DateTime date1, DateTime date2)
         {
-          var httpclient = new HttpClient();
-          String date1F = date1.ToString("yyyy-MM-ddTHH:mm:ss").ToString().Replace(":", "%3A").ToString();
-          String date2F = date2.ToString("yyyy-MM-ddTHH:mm:ss").ToString().Replace(":", "%3A").ToString();
+            var httpclient = new HttpClient();
+            String date1F = date1.ToString("yyyy-MM-ddTHH:mm:ss").ToString().Replace(":", "%3A").ToString();
+            String date2F = date2.ToString("yyyy-MM-ddTHH:mm:ss").ToString().Replace(":", "%3A").ToString();
 
-            var response = await httpclient.GetAsync("https://localhost:44391/api/Weather/" + date1F + "/" + date2F);
-            var responseW2 = await response.Content.ReadAsStringAsync();
-            var responseStringW2 = responseW2.ToString();
+            var response = await httpclient.GetAsync(weatherUrl + "/" + date1F + "/" + date2F);
+            var responseW2 = await response.Content.ReadAsAsync<List<WeatherResponseW2>>();
+            httpclient.Dispose();
 
-            
 
-            
-          httpclient.Dispose();
 
-           if (response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode)
             {
-                //json pt W2 ??
-                var jsonFirstApi = JToken.Parse(responseStringW2).ToString();
 
 
-                //obiect deserializat 
-                //string --> weatherEntity
-                List<WeatherEntity>? weathers = System.Text.Json.JsonSerializer.Deserialize<List<WeatherEntity>>(jsonFirstApi);
+                List<WeatherEntity> listOfWeathers = Converter.ListW2ToListEntity(responseW2);
 
 
+                List<WeatherResponse>? weathersResponse = Converter.WeatherToResponseList(listOfWeathers);
 
-                //mapare de obiecte deserializate la modele de raspuns din serviciu care e rasp pt client
-                //weatherEntity --> weatherResponse
-                List<WeatherResponse>? weathersResponse = Converter.WeatherToResponseList(weathers);
-
-
-
-                //weatherResponse --> json
-                String jsonString = "";
-                foreach (WeatherResponse q in weathersResponse)
-                {
-                    var json_string = JsonConvert.SerializeObject(new
-                    {
-                        id = q.Id,
-                        date = q.Date,
-                        time = q.TimeOfTheDate,
-                        minimumTemperature = q.MinimumTemperature,
-                        maximumTemperature = q.MaximumTemperature,
-                        precipitationsProbality = q.PrecipitationsProbability,
-                        atmosphericFenomens = q.AtmosphericFenomens,
-                        otherInformation = q.OtherInformation,
-                        dataSource = q.DataSource
-                    });
-
-                    var httpContent = new StringContent(json_string, Encoding.UTF8, "application/json");
-                    jsonString = jsonString + httpContent.ReadAsStringAsync().Result.ToString();
-
-
-                }
-                var json = JToken.Parse(jsonString).ToString();
-                return Ok(json);
-                //return obiect de raspuns nou
-
-
+                return Ok(weathersResponse);
 
 
             }
-            else return NoContent();
-           
+            else
+            {
+
+                return NoContent();
+            }
         }
 
 
@@ -175,6 +111,8 @@ namespace APIWeather.Controllers
         //returneaza prognoza/prognozele din aceasta zi, indiferent de sursa
         //  2010-11-11T00:00:00 --> apel
         // https://localhost:44391/api/Weather/forDay/2010-11-11T00%3A00%3A00 --> creat
+
+
         [HttpGet("GetForecastForDay")]
         public async Task<ActionResult<List<WeatherResponse>>> GetForecastForDay(DateTime date)
         {
@@ -182,64 +120,30 @@ namespace APIWeather.Controllers
             var httpclient = new HttpClient();
             String dateF = date.ToString("yyyy-MM-ddTHH:mm:ss").ToString().Replace(":", "%3A").ToString();
 
-            var response = await httpclient.GetAsync("https://localhost:44391/api/Weather/forDay/" + dateF); 
-            var responseW2 = await response.Content.ReadAsStringAsync();
-            var responseStringW2 = responseW2.ToString();
+            var response = await httpclient.GetAsync(weatherUrl + "/forDay/" + dateF);
+            var responseW2 = await response.Content.ReadAsAsync<List<WeatherResponseW2>>();
             httpclient.Dispose();
 
 
-            if (response.IsSuccessStatusCode)
+            //weatherResponseW2 in format Json
+            if (response.IsSuccessStatusCode && responseW2 != null)
             {
-                //json pt W2 ??
-                var jsonFirstApi = JToken.Parse(responseStringW2).ToString();
 
 
-                //obiect deserializat 
-                //string --> weatherEntity
-                List<WeatherEntity>? weathers = System.Text.Json.JsonSerializer.Deserialize<List<WeatherEntity>>(jsonFirstApi);
+                List<WeatherEntity> listOfWeathers = Converter.ListW2ToListEntity(responseW2);
 
+                List<WeatherResponse>? weathersResponse = Converter.WeatherToResponseList(listOfWeathers);
 
-
-                //mapare de obiecte deserializate la modele de raspuns din serviciu care e rasp pt client
-                //weatherEntity --> weatherResponse
-                List<WeatherResponse>? weathersResponse = Converter.WeatherToResponseList(weathers);
-
-
-
-                //weatherResponse --> json
-                String jsonString = "";
-                foreach (WeatherResponse q in weathersResponse)
-                {
-                    var json_string = JsonConvert.SerializeObject(new
-                    {
-                        id = q.Id,
-                        date = q.Date,
-                        time = q.TimeOfTheDate,
-                        minimumTemperature = q.MinimumTemperature,
-                        maximumTemperature = q.MaximumTemperature,
-                        precipitationsProbality = q.PrecipitationsProbability,
-                        atmosphericFenomens = q.AtmosphericFenomens,
-                        otherInformation = q.OtherInformation,
-                        dataSource = q.DataSource
-                    });
-
-                    var httpContent = new StringContent(json_string, Encoding.UTF8, "application/json");
-                    jsonString = jsonString + httpContent.ReadAsStringAsync().Result.ToString();
-
-
-                }
-                var json = JToken.Parse(responseStringW2).ToString();
-                return Ok(json);
-                //return obiect de raspuns nou
-
+                return Ok(weathersResponse);
 
 
             }
-            else return NoContent();
+            else
+            {
 
+                return NoContent();
+            }
         }
-
-        
 
 
 
@@ -252,16 +156,15 @@ namespace APIWeather.Controllers
 
             var httpclient = new HttpClient();
             String dateF = date.ToString("yyyy-MM-ddTHH:mm:ss").ToString().Replace(":", "%3A").ToString();
-            var response = await httpclient.DeleteAsync("https://localhost:44391/api/Weather/30days/" + dateF);
-           
+            var response = await httpclient.DeleteAsync(weatherUrl + "/30days/" + dateF);
 
 
-         
+
             if (response.IsSuccessStatusCode)
             {
                 return Ok("Successfully deleted!");
             }
-            else if(response.StatusCode== System.Net.HttpStatusCode.NotFound)
+            else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
                 return NotFound($"No weather forecast has been deleted because there aren't weather forecasts from this date. ");
 
@@ -269,7 +172,7 @@ namespace APIWeather.Controllers
             else return BadRequest($"Wrong calendar date! ");
 
 
-            
+
         }
 
 
@@ -284,23 +187,27 @@ namespace APIWeather.Controllers
         [HttpPut("UpdateForDaySource")]
         public async Task<IActionResult> UpdateForDaySource(DateTime date, SourceEnum source, WeatherRequest weatherRequest)
         {
-            
+
             var httpclient = new HttpClient();
 
             WeatherEntity w = Converter.RequestToWeather(weatherRequest);
-            var jsonString = JsonConvert.SerializeObject(new { id = w.Id, date = w.Date, 
-                time = w.Time, minimumTemperature = w.MinimumTemperature,
+            var jsonString = JsonConvert.SerializeObject(new
+            {
+                id = w.Id,
+                date = w.Date,
+                time = w.Time,
+                minimumTemperature = w.MinimumTemperature,
                 maximumTemperature = w.MaximumTemperature,
                 precipitationsProbality = w.PrecipitationsProbability,
                 atmosphericFenomens = w.AtmosphericFenomens,
-                otherInformation = w.OtherInformation, 
+                otherInformation = w.OtherInformation,
                 dataSource = w.DataSource
-            }) ;
+            });
             var httpContent = new StringContent(jsonString, Encoding.UTF8, "application/json");
             String dateF = date.ToString("yyyy-MM-ddTHH:mm:ss").ToString().Replace(":", "%3A").ToString();
-            var response = await httpclient.PutAsync("https://localhost:44391/api/Weather/for_day/" + dateF + "/" + source.ToString(), httpContent);
+            var response = await httpclient.PutAsync(weatherUrl + "/for_day/" + dateF + "/" + source.ToString(), httpContent);
             var responseString = await response.Content.ReadAsStringAsync();
-               
+
             httpclient.Dispose();
             if (response.IsSuccessStatusCode)
             {
@@ -342,7 +249,7 @@ namespace APIWeather.Controllers
             WeatherEntity w = Converter.RequestToWeather(weatherRequest);
             var jsonString = JsonConvert.SerializeObject(new
             {
-                
+
                 date = w.Date,
                 time = w.Time,
                 minimumTemperature = w.MinimumTemperature,
@@ -351,15 +258,15 @@ namespace APIWeather.Controllers
                 atmosphericFenomens = w.AtmosphericFenomens,
                 otherInformation = w.OtherInformation,
                 dataSource = w.DataSource
-            }) ;
+            });
 
-            
+
             var httpContentWeather = new StringContent(jsonString, Encoding.UTF8, "application/json");
             String dateF = date.ToString("yyyy-MM-ddTHH:mm:ss").ToString().Replace(":", "%3A").ToString();
-            var response = await httpclient.PostAsync("https://localhost:44391/api/Weather/" + dateF.ToString(), httpContentWeather);
+            var response = await httpclient.PostAsync(weatherUrl + "/" + dateF.ToString(), httpContentWeather);
             var responseString = await response.Content.ReadAsStringAsync();
             httpclient.Dispose();
-           
+
 
             if (response.IsSuccessStatusCode)
             {
@@ -372,5 +279,7 @@ namespace APIWeather.Controllers
 
 
         }
+
+
     }
 }
