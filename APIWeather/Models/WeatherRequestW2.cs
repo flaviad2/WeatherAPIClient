@@ -2,7 +2,7 @@
 {
 
     [Serializable]
-    public class WeatherRequest
+    public class WeatherRequestW2
     {
 
         public int Id { get; set; }
@@ -31,7 +31,7 @@
 
         public SourceEnum DataSource { get; set; }
 
-        public WeatherRequest(int id, DateTime date, TimeSpan time, int minimumTemperature, int maximumTemperature, int precipitationsProbability, bool atmosphericFenomens, string otherInformation, SourceEnum dataSource)
+        public WeatherRequestW2(int id, DateTime date, TimeSpan time, int minimumTemperature, int maximumTemperature, int precipitationsProbability, bool atmosphericFenomens, string otherInformation, SourceEnum dataSource)
         {
             Id = id;
             Date = date;

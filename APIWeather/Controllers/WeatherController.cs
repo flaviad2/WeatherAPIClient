@@ -43,18 +43,18 @@ namespace APIWeather.Controllers
             var responseW2 = await response.Content.ReadAsAsync<List<WeatherResponseW2>>();
             httpclient.Dispose();
 
+            //responseW2 = raspuns de la primul controller
 
             if (response.IsSuccessStatusCode)
             {
 
+                //responseW2 --> responseEntity --> response (=raspuns pt client) 
 
-                List<WeatherEntity> listOfWeathers = Converter.ListW2ToListEntity(responseW2);
-
+                List<Weather> listOfWeathers = Converter.ListW2ToListEntity(responseW2);
 
                 List<WeatherResponse>? weathersResponse = Converter.WeatherToResponseList(listOfWeathers);
 
                 return Ok(weathersResponse);
-                //return obiect de raspuns nou
 
 
             }
@@ -81,6 +81,9 @@ namespace APIWeather.Controllers
 
             var response = await httpclient.GetAsync(weatherUrl + "/" + date1F + "/" + date2F);
             var responseW2 = await response.Content.ReadAsAsync<List<WeatherResponseW2>>();
+
+            //responseW2 = raspuns de la primul controller
+
             httpclient.Dispose();
 
 
@@ -89,10 +92,11 @@ namespace APIWeather.Controllers
             {
 
 
-                List<WeatherEntity> listOfWeathers = Converter.ListW2ToListEntity(responseW2);
-
+                List<Weather> listOfWeathers = Converter.ListW2ToListEntity(responseW2);
 
                 List<WeatherResponse>? weathersResponse = Converter.WeatherToResponseList(listOfWeathers);
+
+                //responseW2 --> responseEntity --> response (=raspuns pt client) 
 
                 return Ok(weathersResponse);
 
@@ -125,14 +129,18 @@ namespace APIWeather.Controllers
             httpclient.Dispose();
 
 
-            //weatherResponseW2 in format Json
+            //responseW2 = raspuns de la primul controller
+
             if (response.IsSuccessStatusCode && responseW2 != null)
             {
 
 
-                List<WeatherEntity> listOfWeathers = Converter.ListW2ToListEntity(responseW2);
+                List<Weather> listOfWeathers = Converter.ListW2ToListEntity(responseW2);
 
                 List<WeatherResponse>? weathersResponse = Converter.WeatherToResponseList(listOfWeathers);
+
+                //responseW2 --> responseEntity --> response (=raspuns pt client) 
+
 
                 return Ok(weathersResponse);
 
@@ -187,10 +195,17 @@ namespace APIWeather.Controllers
         [HttpPut("UpdateForDaySource")]
         public async Task<IActionResult> UpdateForDaySource(DateTime date, SourceEnum source, WeatherRequest weatherRequest)
         {
+            //weatherRequest = request de la client 
 
             var httpclient = new HttpClient();
 
-            WeatherEntity w = Converter.RequestToWeather(weatherRequest);
+            //weatherRequest --> weatherRequestW2 (request cu care apelez metoda din primul controller) 
+
+            WeatherRequestW2 w = Converter.ToWeatherRequestW2(weatherRequest);
+
+
+            //json pentru weatherRequestW2 
+
             var jsonString = JsonConvert.SerializeObject(new
             {
                 id = w.Id,
@@ -203,16 +218,26 @@ namespace APIWeather.Controllers
                 otherInformation = w.OtherInformation,
                 dataSource = w.DataSource
             });
+
             var httpContent = new StringContent(jsonString, Encoding.UTF8, "application/json");
             String dateF = date.ToString("yyyy-MM-ddTHH:mm:ss").ToString().Replace(":", "%3A").ToString();
             var response = await httpclient.PutAsync(weatherUrl + "/for_day/" + dateF + "/" + source.ToString(), httpContent);
-            var responseString = await response.Content.ReadAsStringAsync();
+            var responseW2 = await response.Content.ReadAsAsync<WeatherResponseW2>();
+
+            //responseW2 = raspuns de la primul controller
+
 
             httpclient.Dispose();
             if (response.IsSuccessStatusCode)
             {
-                var json = JToken.Parse(responseString).ToString();
-                return Ok(json);
+               
+                Weather weather = Converter.ToWeatherEntity(responseW2);
+                WeatherResponse weatherResponse = Converter.WeatherToResponseElem(weather);
+
+                //responseW2 --> responseEntity --> response (=raspuns pt client) 
+
+
+                return Ok(weatherResponse);
             }
             else return NotFound($"Weather for day {date} and source {source} was not found");
 
@@ -243,13 +268,18 @@ namespace APIWeather.Controllers
         [HttpPost("AddForDay")]
         public async Task<IActionResult> AddForDay(DateTime date, WeatherRequest weatherRequest)
         {
+            //weatherRequest = request de la client 
 
             var httpclient = new HttpClient();
 
-            WeatherEntity w = Converter.RequestToWeather(weatherRequest);
+            //weatherRequest --> weatherRequestW2 (request cu care apelez metoda din primul controller) 
+
+
+            WeatherRequestW2 w = Converter.ToWeatherRequestW2(weatherRequest);
+
             var jsonString = JsonConvert.SerializeObject(new
             {
-
+                id = w.Id,
                 date = w.Date,
                 time = w.Time,
                 minimumTemperature = w.MinimumTemperature,
@@ -264,14 +294,21 @@ namespace APIWeather.Controllers
             var httpContentWeather = new StringContent(jsonString, Encoding.UTF8, "application/json");
             String dateF = date.ToString("yyyy-MM-ddTHH:mm:ss").ToString().Replace(":", "%3A").ToString();
             var response = await httpclient.PostAsync(weatherUrl + "/" + dateF.ToString(), httpContentWeather);
-            var responseString = await response.Content.ReadAsStringAsync();
+            var responseW2 = await response.Content.ReadAsAsync<WeatherResponseW2>();
+
+            //responseW2 = raspuns de la primul controller
+
             httpclient.Dispose();
-
-
             if (response.IsSuccessStatusCode)
             {
-                var json = JToken.Parse(responseString).ToString();
-                return Ok(json);
+
+                Weather weather = Converter.ToWeatherEntity(responseW2);
+                WeatherResponse weatherResponse = Converter.WeatherToResponseElem(weather);
+
+                //responseW2 --> responseEntity --> response (=raspuns pt client) 
+
+
+                return Ok(weatherResponse);
             }
             return BadRequest($"No weather forecast has been added because the date is invalid. Please enter a valid date for the forecast! ");
 

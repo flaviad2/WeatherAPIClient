@@ -6,7 +6,7 @@ using Newtonsoft.Json.Converters;
 namespace APIWeather.Models
 {
 
-    public class WeatherEntity
+    public class Weather
     {
         
         [JsonProperty("Id")]
@@ -39,7 +39,7 @@ namespace APIWeather.Models
         public SourceEnum DataSource { get; set; }
 
 
-        public WeatherEntity(int id, DateTime date, TimeSpan time, int minimumTemperature, int maximumTemperature, int precipitationsProbability, bool atmosphericFenomens, string otherInformation, SourceEnum dataSource)
+        public Weather(int id, DateTime date, TimeSpan time, int minimumTemperature, int maximumTemperature, int precipitationsProbability, bool atmosphericFenomens, string otherInformation, SourceEnum dataSource)
         {
             Id = id;
             Date = date;

@@ -20,10 +20,10 @@ namespace APIWeather.Controllers
                 return instance;
             }
         }
-        public static List<WeatherResponse> WeatherToResponseList(List<WeatherEntity> weathers)
+        public static List<WeatherResponse> WeatherToResponseList(List<Weather> weathers)
         {
             List<WeatherResponse> listResult = new();
-            foreach (WeatherEntity w in weathers)
+            foreach (Weather w in weathers)
             {
                 WeatherResponse weatherResponse = new WeatherResponse(w.Id, w.Date, w.Time, w.MinimumTemperature, w.MaximumTemperature, w.PrecipitationsProbability, w.AtmosphericFenomens, w.OtherInformation, w.DataSource);
                 listResult.Add(weatherResponse);
@@ -31,30 +31,37 @@ namespace APIWeather.Controllers
             return listResult;
         }
 
-        public static WeatherResponse WeatherToResponseElem(WeatherEntity w)
+        public static WeatherResponse WeatherToResponseElem(Weather w)
         {
             return new WeatherResponse(w.Id, w.Date, w.Time, w.MinimumTemperature, w.MaximumTemperature, w.PrecipitationsProbability, w.AtmosphericFenomens, w.OtherInformation, w.DataSource);
         }
 
-        public static WeatherEntity RequestToWeather(WeatherRequest w)
+        public static Weather RequestToWeather(WeatherRequest w)
         {
-            return new WeatherEntity(w.Id, w.Date, w.Time, w.MinimumTemperature, w.MaximumTemperature, w.PrecipitationsProbability, w.AtmosphericFenomens, w.OtherInformation, w.DataSource);
+            return new Weather(w.Id, w.Date, w.Time, w.MinimumTemperature, w.MaximumTemperature, w.PrecipitationsProbability, w.AtmosphericFenomens, w.OtherInformation, w.DataSource);
 
         }
 
-        public static WeatherEntity ToWeatherEntity(WeatherResponseW2 we)
+        public static Weather ToWeatherEntity(WeatherResponseW2 we)
         {
-            return new WeatherEntity(we.Id, we.Date, we.Time, we.MinimumTemperature, we.MaximumTemperature, we.PrecipitationsProbability,
+            return new Weather(we.Id, we.Date, we.Time, we.MinimumTemperature, we.MaximumTemperature, we.PrecipitationsProbability,
                                         we.AtmosphericFenomens, we.OtherInformation, we.DataSource);
 
         }
 
-        public static List<WeatherEntity> ListW2ToListEntity(List<WeatherResponseW2> wList)
+        public static WeatherRequestW2 ToWeatherRequestW2(WeatherRequest we)
         {
-            List<WeatherEntity> result = new List<WeatherEntity>();
+            return new WeatherRequestW2(we.Id, we.Date, we.Time, we.MinimumTemperature, we.MaximumTemperature, we.PrecipitationsProbability,
+                                        we.AtmosphericFenomens, we.OtherInformation, we.DataSource);
+
+        }
+
+        public static List<Weather> ListW2ToListEntity(List<WeatherResponseW2> wList)
+        {
+            List<Weather> result = new List<Weather>();
             foreach(WeatherResponseW2 we in wList)
             {
-                result.Add(new WeatherEntity(we.Id, we.Date, we.Time, we.MinimumTemperature, we.MaximumTemperature, we.PrecipitationsProbability,
+                result.Add(new Weather( we.Id, we.Date, we.Time, we.MinimumTemperature, we.MaximumTemperature, we.PrecipitationsProbability,
                                         we.AtmosphericFenomens, we.OtherInformation, we.DataSource));
 
             }
