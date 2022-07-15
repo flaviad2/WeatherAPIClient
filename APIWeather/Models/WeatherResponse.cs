@@ -50,7 +50,8 @@ namespace APIWeather.Models
             AtmosphericFenomens = atmosphericFenomens;
             OtherInformation = otherInformation;
             DataSource = dataSource;
-        }
+            NumeLunaCurenta = date.ToString("MMMMMMM");
+       }
 
     }
 }

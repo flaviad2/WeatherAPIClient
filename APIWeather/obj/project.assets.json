@@ -7026,11 +7026,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ANTONIA.DOROBAT\\source\\repos\\WebApplication2\\APIWeather\\APIWeather.csproj",
+      "projectUniqueName": "C:\\Users\\ANTONIA.DOROBAT\\source\\repos\\WebApplication2 - Copy\\APIWeather\\APIWeather.csproj",
       "projectName": "APIWeather",
-      "projectPath": "C:\\Users\\ANTONIA.DOROBAT\\source\\repos\\WebApplication2\\APIWeather\\APIWeather.csproj",
+      "projectPath": "C:\\Users\\ANTONIA.DOROBAT\\source\\repos\\WebApplication2 - Copy\\APIWeather\\APIWeather.csproj",
       "packagesPath": "C:\\Users\\ANTONIA.DOROBAT\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ANTONIA.DOROBAT\\source\\repos\\WebApplication2\\APIWeather\\obj\\",
+      "outputPath": "C:\\Users\\ANTONIA.DOROBAT\\source\\repos\\WebApplication2 - Copy\\APIWeather\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ANTONIA.DOROBAT\\AppData\\Roaming\\NuGet\\NuGet.Config",

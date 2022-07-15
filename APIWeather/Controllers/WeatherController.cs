@@ -1,11 +1,7 @@
 ﻿using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using APIWeather.Models;
-using Newtonsoft.Json.Schema;
-using System.Text.Json;
-using static Microsoft.Extensions.Configuration.IConfiguration; 
 namespace APIWeather.Controllers
 {
 
@@ -14,20 +10,14 @@ namespace APIWeather.Controllers
     public class WeatherAPIController : ControllerBase
     {
 
-
-
-
         private readonly IConfiguration _config;
 
-        private String weatherUrl;
+        private readonly String weatherUrl;
         public WeatherAPIController(IConfiguration config)
         {
             _config = config;
             weatherUrl = _config.GetValue<String>("WeatherUrl");
         }
-
-
-
 
 
 
@@ -48,7 +38,7 @@ namespace APIWeather.Controllers
             if (response.IsSuccessStatusCode)
             {
 
-                //responseW2 --> responseEntity --> response (=raspuns pt client) 
+                //responseW2 --> weather object --> response (=raspuns pt client) 
 
                 List<Weather> listOfWeathers = Converter.ListW2ToListEntity(responseW2);
 
@@ -96,7 +86,7 @@ namespace APIWeather.Controllers
 
                 List<WeatherResponse>? weathersResponse = Converter.WeatherToResponseList(listOfWeathers);
 
-                //responseW2 --> responseEntity --> response (=raspuns pt client) 
+                //responseW2 --> weatherObject --> response (=raspuns pt client) 
 
                 return Ok(weathersResponse);
 
@@ -139,7 +129,7 @@ namespace APIWeather.Controllers
 
                 List<WeatherResponse>? weathersResponse = Converter.WeatherToResponseList(listOfWeathers);
 
-                //responseW2 --> responseEntity --> response (=raspuns pt client) 
+                //responseW2 --> weatherObject --> response (=raspuns pt client) 
 
 
                 return Ok(weathersResponse);
@@ -234,7 +224,7 @@ namespace APIWeather.Controllers
                 Weather weather = Converter.ToWeatherEntity(responseW2);
                 WeatherResponse weatherResponse = Converter.WeatherToResponseElem(weather);
 
-                //responseW2 --> responseEntity --> response (=raspuns pt client) 
+                //responseW2 --> weatherObject --> response (=raspuns pt client) 
 
 
                 return Ok(weatherResponse);
@@ -305,12 +295,13 @@ namespace APIWeather.Controllers
                 Weather weather = Converter.ToWeatherEntity(responseW2);
                 WeatherResponse weatherResponse = Converter.WeatherToResponseElem(weather);
 
-                //responseW2 --> responseEntity --> response (=raspuns pt client) 
+                //responseW2 --> weatherObject --> response (=raspuns pt client) 
 
 
                 return Ok(weatherResponse);
             }
-            return BadRequest($"No weather forecast has been added because the date is invalid. Please enter a valid date for the forecast! ");
+            return BadRequest($"No weather forecast has been added because the date is invalid." +
+                $" Please enter a valid date for the forecast! ");
 
 
 

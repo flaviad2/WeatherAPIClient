@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Z9o3oeAIotdQVNxBNbYGLZWy7TvgVwE0rpq5B3uUJzz+4VFZwM0J6TljN+IdSrG9y8HyilTn6ba/uqzLF/CZ6Q==",
+  "dgSpecHash": "z4Au+QS8Wk6M+cCHERoAjqxhFP1qjcTQ5ZuAHMvG/8ScDGpv/Mdvn0oFUB7JdD7OKfh++m8EHtV9TS3Tp9I/QQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\ANTONIA.DOROBAT\\source\\repos\\WebApplication2\\APIWeather\\APIWeather.csproj",
+  "projectFilePath": "C:\\Users\\ANTONIA.DOROBAT\\source\\repos\\WebApplication2 - Copy\\APIWeather\\APIWeather.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ANTONIA.DOROBAT\\.nuget\\packages\\enum.ext\\1.0.7\\enum.ext.1.0.7.nupkg.sha512",
     "C:\\Users\\ANTONIA.DOROBAT\\.nuget\\packages\\enum.ext.newtonsoftjson\\1.0.7\\enum.ext.newtonsoftjson.1.0.7.nupkg.sha512",
